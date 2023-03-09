@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Forecast</string>
+    <string name="daily_forecast_button">Daily Forecast</string>
+    <string name="historical_weather_title">Historical Weather Data</string>
+    <string name="month_spinner">Month</string>
+    <string name="day_spinner">Day</string>
+    <string name="month_text">Select month</string>
+    <string name="day_text">Select day</string>
+    <string name="historical_temp">Average temperature from the past 3 years</string>
+    <string name="historical_avg_button">Historical Averages</string>
 </resources>
