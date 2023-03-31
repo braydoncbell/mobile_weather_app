@@ -1,4 +1,4 @@
-package com.braydon.android.forecast.presentation.ui.theme
+package com.braydon.android.forecast.view.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
