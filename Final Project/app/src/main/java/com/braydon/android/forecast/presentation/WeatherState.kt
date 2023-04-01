@@ -1,4 +1,4 @@
-package com.braydon.android.forecast.view
+package com.braydon.android.forecast.presentation
 
 import com.braydon.android.forecast.domain.weather.WeatherInfo
 
