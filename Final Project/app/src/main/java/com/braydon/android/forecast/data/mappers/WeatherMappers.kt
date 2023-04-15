@@ -7,6 +7,7 @@ import com.braydon.android.forecast.domain.weather.WeatherInfo
 import com.braydon.android.forecast.domain.weather.WeatherType
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import kotlin.math.round
 
 private data class IndexedWeatherData(
     val index: Int,
@@ -25,7 +26,7 @@ fun WeatherDataDto.toWeatherDataMap(): Map<Int, List<WeatherData>> {
             index = index,
             data = WeatherData(
                 time = LocalDateTime.parse(time, DateTimeFormatter.ISO_DATE_TIME),
-                temperatureCelsius = temperature,
+                temperatureFahrenheit = celsiusToFahrenheit(temperature),
                 pressure = pressure,
                 windSpeed = windSpeed,
                 humidity = humidity,
@@ -50,4 +51,8 @@ fun WeatherDto.toWeatherInfo(): WeatherInfo {
         weatherDataPerDay = weatherDataMap,
         currentWeatherData = currentWeatherData
     )
+}
+
+fun celsiusToFahrenheit(celsius: Double): Double {
+    return round(((celsius * 9/5) + 32) * 10) / 10
 }
