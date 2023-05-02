@@ -1,7 +1,9 @@
 package com.braydon.android.forecast.presentation
 
 import android.Manifest
+import android.content.Intent
 import android.os.Bundle
+//import android.widget.Button
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResultLauncher
@@ -20,6 +22,8 @@ import com.braydon.android.forecast.presentation.ui.theme.DarkBlue
 import com.braydon.android.forecast.presentation.ui.theme.DeepBlue
 import com.braydon.android.forecast.presentation.ui.theme.WeatherAppTheme
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -34,10 +38,12 @@ class MainActivity : ComponentActivity() {
         ) {
             viewModel.loadWeatherInfo()
         }
-        permissionLauncher.launch(arrayOf(
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-        ))
+        permissionLauncher.launch(
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+            )
+        )
         setContent {
             WeatherAppTheme {
                 Box(
@@ -46,7 +52,9 @@ class MainActivity : ComponentActivity() {
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(DarkBlue)
+                            .background(DarkBlue),
+                        verticalArrangement = Arrangement.Top,
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         WeatherCard(
                             state = viewModel.state,
@@ -54,8 +62,36 @@ class MainActivity : ComponentActivity() {
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                         WeatherForecast(state = viewModel.state)
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(Color.Transparent)
+                                    .padding(top = 8.dp, bottom = 8.dp)
+                            ) {
+                                Button(
+                                    onClick = {
+                                        val intent = Intent(this@MainActivity, HistoricalActivity::class.java)
+                                        startActivity(intent)
+                                    },
+                                    colors = ButtonDefaults.buttonColors(
+                                        backgroundColor = DeepBlue,
+                                        contentColor = Color.White
+                                    ),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(top = 33.dp, bottom = 33.dp)
+                                        .height(56.dp),
+                                ) {
+                                    Text(text = "Historical Averages")
+                                }
+                            }
+                        }
                     }
-                    if(viewModel.state.isLoading) {
+                    if (viewModel.state.isLoading) {
                         CircularProgressIndicator(
                             modifier = Modifier.align(Alignment.Center)
                         )
